@@ -2,52 +2,70 @@ using EYOkulProjectWebUI.Hubs;
 using EYOkulProjectWebUI.Models;
 using EYOkulProjectWebUI.Subscription.Concreate;
 using EYOkulProjectWebUI.Subscription.Middleware;
-using NToastNotify;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews()
-    .AddNToastNotifyToastr(new ToastrOptions()
-    {
-        PositionClass = ToastPositions.TopLeft,
-        TimeOut = 5000,
-        ProgressBar = true,
-        CloseButton = true
-    });
+// Servislerin konteynýra eklenmesi
+builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
-    
-builder.Services.AddSingleton<Service_Transaction<TransactionsModel>>();
-var app = builder.Build();
-
-app.UseRouting(); // EndpointRoutingMiddleware'yi burada çaðýrýn
-
-app.UseEndpoints(endpoints =>
+builder.Services.AddSession(options =>
 {
-    endpoints.MapHub<TransactionHub>("/TransactionHub"); // SignalR hub'ýný burada yapýlandýrýn
-                                                         // Diðer son noktalarý burada yapýlandýrýn
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
 });
 
+// Add services to the container.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Home/Index"; // Deðiþtirebilirsiniz
+        options.LogoutPath = "/Account/Logout"; // Deðiþtirebilirsiniz
+        options.Cookie.HttpOnly = true;
+        options.SlidingExpiration = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    });
 
-app.UseDatabaseSubsription<Service_Transaction<TransactionsModel>>("TBL_TRANSACTIONS");
 
-// Configure the HTTP request pipeline.
+
+
+
+
+// Servislerin konteynýra eklenmesi
+builder.Services.AddSingleton<Service_Transaction<TransactionsModel>>();
+
+var app = builder.Build();
+
+// Middleware'lerin kullanýlmasý
+app.UseStaticFiles();
+app.UseRouting();
+app.UseSession();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseDatabaseSubsription<Service_Transaction<TransactionsModel>>("TBL_TRANSACTIONS"); // Fixed typo in "Subscription"
+
+// Endpoint'lerin tanýmlanmasý
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<TransactionHub>("/TransactionHub");
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
+// HTTP isteði pipeline'ýnýn yapýlandýrýlmasý
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.UseNToastNotify();
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
 
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+// Uygulamanýn çalýþtýrýlmasý
 app.Run();

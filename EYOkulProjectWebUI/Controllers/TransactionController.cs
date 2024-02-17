@@ -3,9 +3,11 @@ using EYOkulProjectWebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EYOkulProjectWebUI.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         public IActionResult Index(DateTime startDate, DateTime endDate,int selectDate)

@@ -11,12 +11,16 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NToastNotify" Version="8.0.0" />
     <PackageReference Include="SqlTableDependency" Version="8.5.8" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Subscription\Abstract\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Template\.DS_Store" />
+    <None Include="wwwroot\Template\.github\workflows\main.yml" />
   </ItemGroup>
 
 </Project>

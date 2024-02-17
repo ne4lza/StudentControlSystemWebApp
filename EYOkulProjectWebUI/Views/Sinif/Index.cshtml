@@ -21,13 +21,14 @@
     }
 </style>
 <div class="container-fluid py-4">
+    <div class="col">
+        <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#myModal">Yeni Bir Sınıf Ekle</button>
+    </div>
+    <br />
     <div class="row">
-        <div class="col">
-            <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#myModal">Yeni Bir Sınıf Ekle</button>
-        </div>
+        
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Sınıflar</h5>
                         <!-- Table with stripped rows -->
@@ -45,58 +46,49 @@
                                     <tr class="text-center">
                                         <td>@item.ClassName</td>
                                         <td>@item.Desciription</td>
-                                        <td><button class="btn btn-primary"><i class="fa fa-pencil"></i></button><button class="btn btn-danger ml-2"><i class="fa fa-remove"></i></button></td>
+                                    <td>
+                                        <button class="btn btn-primary">
+                                            <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-danger"
+                                            ><i class="bi bi-trash"></i>
+                                        </button></td>
                                     </tr>
                                 }
                             </tbody>
                             
                         </table>
                     </div>
-
-                </div> 
-
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal">
+<!-- Ekle Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
-            <!-- Modal Başlık -->
             <div class="modal-header">
-                <h4 class="modal-title">Yeni Sınıf Ekle</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Yeni Sınıf Ekle</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Modal İçerik -->
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label for="sinifAdi">Sınıf Adı:</label>
-                        <input type="text" class="form-control" id="sinifAdi" placeholder="Sınıf Adı">
+                    <div class="mb-3">
+                        <label for="sinifAdi" class="form-label">Sınıf Adı:</label>
+                        <input type="text" class="form-control" id="sinifAdi">
                     </div>
-                    <div class="form-group">
-                        <label for="ogrenciSayisi">Öğrenci Sayısı:</label>
-                        <input type="text" class="form-control" id="ogrenciSayisi" placeholder="Öğrenci Sayısı">
+                    <div class="mb-3">
+                        <label for="ogrenciSayisi" class="form-label">Açıklama:</label>
+                        <input type="text" class="form-control" id="ogrenciSayisi">
                     </div>
-                    <div class="form-group">
-                        <label for="ogretmenAdi">Öğretmen Adı:</label>
-                        <input type="text" class="form-control" id="ogretmenAdi" placeholder="Öğretmen Adı">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Kaydet</button>
                 </form>
             </div>
-
-            <!-- Modal Altbilgi -->
             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
             </div>
-
         </div>
     </div>
 </div>
+
