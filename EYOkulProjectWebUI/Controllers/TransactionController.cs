@@ -30,7 +30,7 @@ namespace EYOkulProjectWebUI.Controllers
                 }
                 var startDateParam = new SqlParameter("@fdate", startDate);
                 var endDateParam = new SqlParameter("@ldate", endDate);
-                var userName = new SqlParameter("@username","Yunus");
+                var userName = new SqlParameter("@username", HttpContext.Session.GetString("Kullanici"));
 
                 var tr = context.TBL_TRANSACTIONS
                                           .FromSqlRaw("EXEC sp_Transaction @fdate, @ldate,@username",

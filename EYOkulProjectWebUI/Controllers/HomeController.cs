@@ -42,9 +42,12 @@ namespace EYOkulProjectWebUI.Controllers
                     return View();
                 }
 
-                HttpContext.Session.SetString("Kullanici", model.Id.ToString());
+                HttpContext.Session.SetString("Kullanici",model.UserName);
+                HttpContext.Session.SetInt32("SchoolId", model.SchoolId);
+                HttpContext.Session.SetInt32("SysUserId", model.Id);
                 string name = model.UserName + " " + model.UserSurName;
                 TempData["SchoolId"] = model.SchoolId;
+                TempData["UserName"] = model.UserName;
                 var school = cotnext.TBL_SCOOLS.Where(x=>x.Id == model.SchoolId).FirstOrDefault();
                 TempData["Id"] = model.Id;
                 List<Claim> claims = new List<Claim>()
@@ -76,7 +79,13 @@ namespace EYOkulProjectWebUI.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            TempData["Alert"] = "Başarıyla Çıkış Yaptınız.";
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         

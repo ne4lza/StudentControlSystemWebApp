@@ -1,0 +1,34 @@
+﻿@model ClassModel
+
+<div class="modal fade" id="UpdateModal-@Model.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sınıfı Güncelle</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/Sinif/UpdateSinif">
+                    <input type="hidden" name="Id" value="@Model.Id">
+                    <div class="mb-3">
+                        <input type="text" class="form-control form-control-sm" style="width: 300px;" placeholder="Sınıf Adı" name="ClassName" value="@Model.ClassName" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control form-control-sm" style="width: 300px;" placeholder="Açıklama" name="Desciription" value="@Model.Desciription" required>
+                    </div>
+                    <input type="hidden" name="ScoolId" value="@Model.ScoolId" />
+                    <input type="hidden" name="IsActive" value="@Model.IsActive" />
+                    <input type="hidden" name="IsDeleted" value="@Model.IsDeleted" />
+                    <input type="hidden" name="InsertedDate" value="@Model.InsertedDate" />
+                    <input type="hidden" name="SysUserId" value="@Model.SysUserId" />
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Güncelle</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                    </div>
+
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

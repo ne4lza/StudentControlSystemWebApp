@@ -1,3 +1,4 @@
+using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Hubs;
 using EYOkulProjectWebUI.Models;
 using EYOkulProjectWebUI.Subscription.Concreate;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Servislerin konteynýra eklenmesi
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<EYOkulDbContext>();
 builder.Services.AddSignalR();
 builder.Services.AddSession(options =>
 {
@@ -24,10 +26,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Home/Index"; // Deðiþtirebilirsiniz
-        options.LogoutPath = "/Account/Logout"; // Deðiþtirebilirsiniz
+        options.LoginPath = "/Home/Index"; 
+        options.LogoutPath = "/Home/Logout";
+        options.AccessDeniedPath = "/Home/AccessDenied";
         options.Cookie.HttpOnly = true;
-        options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
     });
 
