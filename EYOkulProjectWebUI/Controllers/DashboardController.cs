@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EYOkulProjectWebUI.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
-        [Authorize]
         public IActionResult Index()
         {
             return View();

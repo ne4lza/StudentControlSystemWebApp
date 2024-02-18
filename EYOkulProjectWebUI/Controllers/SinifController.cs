@@ -1,9 +1,11 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EYOkulProjectWebUI.Controllers
 {
+    [Authorize]
     public class SinifController : Controller
     {
         EYOkulDbContext _context;

@@ -1,10 +1,12 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
 using EYOkulProjectWebUI.ViewModels.Student;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EYOkulProjectWebUI.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly EYOkulDbContext _context;
