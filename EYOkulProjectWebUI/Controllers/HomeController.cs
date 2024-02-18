@@ -52,6 +52,7 @@ namespace EYOkulProjectWebUI.Controllers
                 TempData["Id"] = model.Id;
                 List<Claim> claims = new List<Claim>()
                 {
+                    new Claim(ClaimTypes.NameIdentifier,model.UserName),
                     new Claim("UserName",model.UserName),
                     new Claim("SchoolName",school.ScoolName),
                     new Claim("UserFullName",name),

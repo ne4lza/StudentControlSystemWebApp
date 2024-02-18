@@ -7,25 +7,25 @@
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/Student/AddStudent">
-                    <input type="hidden" value="@Model.Id" />
-                    <input type="hidden" value="@Model.ScoolId" />
-                    <input type="hidden" value="@Model.IsDeleted" />
-                    <input type="hidden" value="@Model.InsertedDate" />
-                    <input type="hidden" value="@Model.UpdatedDate" />
-                    <input type="hidden" value="@Model.SysUserId" />
+                <form method="post" action="/Student/UpdateStudent">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <input type="hidden" name="ScoolId" value="@Model.ScoolId" />
+                    <input type="hidden" name="IsDeleted" value="@Model.IsDeleted" />
+                    <input type="text" name="InsertedDate" value="@Model.InsertedDate" />
+                    <input type="hidden" name="UpdatedDate" value="@Model.UpdatedDate" />
+                    <input type="text" name="SysUserId" value="@Model.SysUserId" />
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="sinifAdi" class="form-label fw-bold">Öğrenci Adı:</label>
-                                <input type="text" class="form-control" id="sinifAdi" asp-for="StudentName" value="@Model.StudentName" required>
+                                <input type="text" class="form-control" id="sinifAdi" name="StudentName" value="@Model.StudentName" required>
                             </div>
 
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label fw-bold">Öğrenci Soyadı:</label>
-                                <input type="text" class="form-control" id="aciklama" asp-for="StudentSurName" value="@Model.StudentSurName" required>
+                                <input type="text" class="form-control" id="aciklama" name="StudentSurName" value="@Model.StudentSurName" required>
                             </div>
                         </div>
                     </div>
@@ -33,19 +33,19 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="sinifAdi" class="form-label fw-bold">Öğrenci TCKN:</label>
-                                <input type="text" class="form-control" id="sinifAdi" asp-for="StudentTckn" value="@Model.StudentTckn" required>
+                                <input type="text" class="form-control" id="sinifAdi" name="StudentTckn" value="@Model.StudentTckn" required>
                             </div>
 
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label fw-bold">Öğrenci Okul Numarası:</label>
-                                <input type="text" class="form-control" id="aciklama" asp-for="StudentNumber" value="@Model.StudentNumber" required>
+                                <input type="text" class="form-control" id="aciklama" name="StudentNumber" value="@Model.StudentNumber" required>
                             </div>
                         </div>
                     </div>
                     <label for="aciklama" class="form-label fw-bold">Sınıfı:</label>
-                    <select class="form-select mb-3" aria-label="Default select example" id="dateSelector" asp-for="ClassId">
+                    <select class="form-select mb-3" aria-label="Default select example" id="dateSelector" name="ClassId">
                         <option class="text-center" value="@Model.ClassId" selected>@Model.ClassName</option>
                         @foreach (var item in ViewBag.classList)
                         {

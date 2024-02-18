@@ -29,10 +29,13 @@ namespace EYOkulProjectWebUI.Controllers
                             StudentNumber = student.StudentNumber,
                             StudentTckn = student.StudentTckn,
                             IsActive = student.IsActive,
-
+                            UpdatedDate = student.UpdatedDate,
+                            SysUserId = student.SysUserId,
+                            IsDeleted = student.IsDeleted,
+                            InsertedDate = student.InsertedDate,
                             ScoolId = student.ScoolId,
                             ClassId = student.ClassId,
-                            SchollName = school.ScoolName, 
+                            SchollName = school.ScoolName,
                             ClassName = classID.ClassName
                         };
 
@@ -63,11 +66,15 @@ namespace EYOkulProjectWebUI.Controllers
                             StudentNumber = student.StudentNumber,
                             StudentTckn = student.StudentTckn,
                             IsActive = student.IsActive,
-
+                            UpdatedDate = student.UpdatedDate,
+                            SysUserId = student.SysUserId,
+                            IsDeleted = student.IsDeleted,
+                            InsertedDate = student.InsertedDate,
                             ScoolId = student.ScoolId,
                             ClassId = student.ClassId,
                             SchollName = school.ScoolName,
                             ClassName = classID.ClassName
+                            
                         };
 
             StudentViewModel studentViewModel = new StudentViewModel()
@@ -125,9 +132,12 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public IActionResult UpdateStudent(StudentsModel student)
         {
+            student.IsActive = true;
+            student.UpdatedDate = DateTime.Now;
+            _context.TBL_STUDENTS.Update(student);
             _context.SaveChanges();
-            TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
-            return RedirectToAction("Index", "Sinif");
+            TempData["Alert"] = "Öğrenci Güncelleme İşlemi Tamamlandı.";
+            return RedirectToAction("Index", "Student");
         }
     }
 }

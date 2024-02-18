@@ -16,11 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<EYOkulDbContext>();
 builder.Services.AddSignalR();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(5);
-});
-
+builder.Services.AddSession();
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -28,9 +24,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Home/Index"; 
         options.LogoutPath = "/Home/Logout";
-        options.AccessDeniedPath = "/Home/AccessDenied";
         options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+        options.SlidingExpiration = true;
+        options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
     });
 
 
