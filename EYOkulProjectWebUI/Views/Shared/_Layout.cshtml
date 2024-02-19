@@ -137,6 +137,13 @@
                     <span>Veriler</span>
                 </a>
             </li>
+            <li class="nav-heading">Sistem Yönetimi</li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="users-profile.html">
+                    <i class="bi bi-file-earmark"></i>
+                    <span>Dosya İşlemleri</span>
+                </a>
+            </li>
             <li class="nav-heading">Sistem Kullanıcıları Yönetimi</li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="users-profile.html">
@@ -152,15 +159,7 @@
 
     <main id="main" class="main">
 
-        <div class="pagetitle">
-            <h1>Dashboard</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
+        <!-- End Page Title -->
 
         <section class="section dashboard">
             <div class="row">
@@ -226,6 +225,15 @@
     <script>
         $(document).ready(function () {
             var table = $('#example').DataTable({
+                "language": {
+                    "lengthMenu": "_MENU_ Listede kaç adet gözüksün?",
+                    "zeroRecords": "Herhangi bir kayıt bulunamadı.",
+                    "info": "Toplam _PAGES_ adet sayfa var. Toplam Satır: _MAX_",
+                    "infoEmpty": "Kayıt bulunamadı!",
+                    "infoFiltered": "(Toplam _MAX_ adet içerik arasından bulundu.)",
+                    "search": "Arama Yap",
+                    "paginate": { "next": "Sonraki", "previous": "Önceki" }
+                },
                 lengthChange: false,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']
             });
@@ -238,7 +246,7 @@
         });
     </script>
 
-
+ 
 
 
 
