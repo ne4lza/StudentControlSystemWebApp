@@ -39,5 +39,20 @@ namespace EYOkulProjectWebUI.Controllers
             TempData["Alert"] = "Terminal Ekleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Terminal");
         }
+        [HttpGet]
+        public IActionResult UpdateTerminal(int id)
+        {
+            var terminal = _context.TBL_TERMINALS.Where(x => x.Id == id).FirstOrDefault();
+            return PartialView("_UpdateTerminalModal", terminal);
+        }
+        [HttpPost]
+        public IActionResult UpdateTerminal(TerminalModel terminal)
+        {
+            terminal.UpdatedDate = DateTime.Now;
+            _context.TBL_TERMINALS.Update(terminal);
+            _context.SaveChanges();
+            TempData["Alert"] = "Terminal Güncelleme İşlemi Tamamlandı.";
+            return RedirectToAction("Index", "Terminal");
+        }
     }
 }

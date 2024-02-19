@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace EYOkulProjectWebUI.Controllers
 {
@@ -45,10 +46,12 @@ namespace EYOkulProjectWebUI.Controllers
                 HttpContext.Session.SetString("Kullanici",model.UserName);
                 HttpContext.Session.SetInt32("SchoolId", model.SchoolId);
                 HttpContext.Session.SetInt32("SysUserId", model.Id);
+                
                 string name = model.UserName + " " + model.UserSurName;
-                TempData["SchoolId"] = model.SchoolId;
-                TempData["UserName"] = model.UserName;
+                ViewBag.fullName = name;
+                ViewBag.userName = model.UserName;
                 var school = cotnext.TBL_SCOOLS.Where(x=>x.Id == model.SchoolId).FirstOrDefault();
+                ViewBag.schoolName = school.ScoolName;
                 TempData["Id"] = model.Id;
                 List<Claim> claims = new List<Claim>()
                 {

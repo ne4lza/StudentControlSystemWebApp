@@ -64,13 +64,10 @@
                                         <td class="text-danger">Pasif</td>
                                     }
                                     <td>
-                                        <button type="button" data-toggle="modal" data-target=@("#UpdateModal-" + @item.Id) data-url="@Url.Action($"UpdateSinif/{item.Id}")" class="btn btn-primary">
+                                        <button type="button" data-toggle="modal" data-target=@("#UpdateModal-" + @item.Id) data-url="@Url.Action($"UpdateTerminal/{item.Id}")" class="btn btn-primary">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        @* @await Html.PartialAsync("_UpdateSinifModal", item) *@
-                                        <button class="btn btn-warning">
-                                            <i class="bi bi-repeat"></i>
-                                        </button>
+                                        @await Html.PartialAsync("_UpdateTerminalModal", item)
                                     </td>
                                 </tr>
                             }

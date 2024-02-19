@@ -53,7 +53,8 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public IActionResult Index(int selectClass)
         {
-            if(selectClass == -1)
+            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
+            if (selectClass == -1)
                 return RedirectToAction("Index");
 
             var query = from student in _context.TBL_STUDENTS
@@ -134,7 +135,6 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public IActionResult UpdateStudent(StudentsModel student)
         {
-            student.IsActive = true;
             student.UpdatedDate = DateTime.Now;
             _context.TBL_STUDENTS.Update(student);
             _context.SaveChanges();

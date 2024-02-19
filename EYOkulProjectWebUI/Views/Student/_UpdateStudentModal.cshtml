@@ -11,9 +11,9 @@
                     <input type="hidden" name="Id" value="@Model.Id" />
                     <input type="hidden" name="ScoolId" value="@Model.ScoolId" />
                     <input type="hidden" name="IsDeleted" value="@Model.IsDeleted" />
-                    <input type="text" name="InsertedDate" value="@Model.InsertedDate" />
+                    <input type="hidden" name="InsertedDate" value="@Model.InsertedDate" />
                     <input type="hidden" name="UpdatedDate" value="@Model.UpdatedDate" />
-                    <input type="text" name="SysUserId" value="@Model.SysUserId" />
+                    <input type="hidden" name="SysUserId" value="@Model.SysUserId" />
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-3">
@@ -28,6 +28,7 @@
                                 <input type="text" class="form-control" id="aciklama" name="StudentSurName" value="@Model.StudentSurName" required>
                             </div>
                         </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -52,7 +53,11 @@
                             <option class="text-center" value="@item.Id">@item.ClassName</option>
                         }
                     </select>
-
+                    <label for="aciklama" class="form-label fw-bold">Durumu:</label>
+                    <select class="form-select mb-3" name="IsActive">
+                        <option value="true" class="text-success">Aktif</option>
+                        <option value="false" class="text-danger">Pasif</option>
+                    </select>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Güncelle</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>

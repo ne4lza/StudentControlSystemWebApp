@@ -1,11 +1,11 @@
-﻿@* @using System.Security.Claims
+﻿@using System.Security.Claims
 @{
 
     var identity = Context.User.Identity as ClaimsIdentity;
     string userNameClaim = identity?.FindFirst("UserName").Value;
     string schoolNameClaim = identity?.FindFirst("SchoolName").Value;
     string userFullNameClaim = identity?.FindFirst("UserFullName").Value;
-} *@
+}
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -47,7 +47,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">schoolNameClaim</span>
+                <span class="d-none d-lg-block">@schoolNameClaim</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -58,12 +58,12 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">userNameClaim</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@userNameClaim</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>userFullNameClaim</h6>
+                            <h6>@userFullNameClaim</h6>
                             </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -237,6 +237,7 @@
             $('#example_filter').parent().addClass('d-flex align-items-center justify-content-end mb-3');
         });
     </script>
+
 
 
 

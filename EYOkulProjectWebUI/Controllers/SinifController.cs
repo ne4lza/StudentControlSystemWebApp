@@ -53,11 +53,11 @@ namespace EYOkulProjectWebUI.Controllers
         public IActionResult UpdateSinif(ClassModel cl)
         {
             cl.UpdateDate = DateTime.Now;
-            cl.IsActive = true;
             _context.TBL_CLASS.Update(cl);
             _context.SaveChanges();
             TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index","Sinif");
         }
+
     }
 }

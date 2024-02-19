@@ -1,4 +1,4 @@
-﻿@model ClassModel
+﻿@model TerminalModel
 
 <div class="modal fade" id="UpdateModal-@Model.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -8,33 +8,35 @@
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/Sinif/UpdateSinif">
+                <form method="post" action="/Terminal/UpdateTerminal">
                     <input type="hidden" name="Id" value="@Model.Id">
                     <div class="mb-3">
-                        <label for="aciklama" class="form-label fw-bold">Sınıf Adı:</label>
-                        <input type="text" class="form-control form-control-sm"  placeholder="Sınıf Adı" name="ClassName" value="@Model.ClassName" required>
+                        <label for="aciklama" class="form-label fw-bold">Terminal Adı:</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Sınıf Adı" name="TerminalName" value="@Model.TerminalName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="aciklama" class="form-label fw-bold">Açıklama:</label>
-                        <input type="text" class="form-control form-control-sm"  placeholder="Açıklama" name="Desciription" value="@Model.Desciription" required>
+                        <label for="aciklama" class="form-label fw-bold">Terminal Numarası:</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Açıklama" name="TerminalNum" value="@Model.TerminalNum" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="aciklama" class="form-label fw-bold">Terminal IP:</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Açıklama" name="TerminalIp" value="@Model.TerminalIp" required>
                     </div>
                     <label for="aciklama" class="form-label fw-bold">Durumu:</label>
                     <select class="form-select mb-3" name="IsActive">
                         <option value="true" class="text-success">Aktif</option>
                         <option value="false" class="text-danger">Pasif</option>
                     </select>
-                    <input type="hidden" name="ScoolId" value="@Model.ScoolId" />
-                    
-                    <input type="hidden" name="IsDeleted" value="@Model.IsDeleted" />
                     <input type="hidden" name="InsertedDate" value="@Model.InsertedDate" />
+                    <input type="hidden" name="IsDeleted" value="@Model.IsDeleted" />
                     <input type="hidden" name="SysUserId" value="@Model.SysUserId" />
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Güncelle</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
-                       
+
                     </div>
 
-                    
+
                 </form>
             </div>
         </div>
