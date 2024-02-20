@@ -15,10 +15,11 @@ namespace EYOkulProjectWebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly EYOkulDbContext _context;
+        public HomeController(ILogger<HomeController> logger, EYOkulDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
         [HttpGet]
         public IActionResult Index()
@@ -28,8 +29,9 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string UserName, string Password)
         {
-            using var cotnext = new EYOkulDbContext();
-            var model = cotnext.TBL_A_USERS.Where(x => x.UserUserName == UserName && x.Password == Password).FirstOrDefault();
+            UserModel userModel = new UserModel();
+            string hashPassword = userModel.HashPassword(Password);
+            var model = _context.TBL_A_USERS.Where(x => x.UserUserName == UserName && x.Password == hashPassword).FirstOrDefault();
             if (model != null)
             {
                 if (!model.IsActive)
@@ -50,7 +52,7 @@ namespace EYOkulProjectWebUI.Controllers
                 string name = model.UserName + " " + model.UserSurName;
                 ViewBag.fullName = name;
                 ViewBag.userName = model.UserName;
-                var school = cotnext.TBL_SCOOLS.Where(x=>x.Id == model.SchoolId).FirstOrDefault();
+                var school = _context.TBL_SCOOLS.Where(x=>x.Id == model.SchoolId).FirstOrDefault();
                 ViewBag.schoolName = school.ScoolName;
                 TempData["Id"] = model.Id;
                 List<Claim> claims = new List<Claim>()

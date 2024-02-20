@@ -1,0 +1,194 @@
+﻿@model List<UserModel>
+@{
+    ViewData["Title"] = "Index";
+    int sira = 1;
+}
+<br />
+<br />
+
+<style>
+    .results tr[visible='false'],
+    .no-result {
+        display: none;
+    }
+
+    .results tr[visible='true'] {
+        display: table-row;
+    }
+
+    .counter {
+        padding: 8px;
+        color: #ccc;
+    }
+</style>
+<div class="container-fluid py-4">
+    <div class="col">
+        <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#AddSysUserModal">Yeni Bir Kullanıcı Ekle</button>
+    </div>
+    <br />
+    <div class="row">
+        @if (TempData["Alert"] != null)
+        {
+            <div class="alert alert-primary" role="alert">
+                @TempData["Alert"]
+            </div>
+
+        }
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="col-6">
+                        <h5 class="card-title">Kullanıcı Tipine Göre Filtrele</h5>
+                        <form method="post" action="/SysUser/Index">
+                            <select class="form-select mb-3" aria-label="Default select example" id="dateSelector" name="selectType">
+                                <option value="-1" selected>--Tümünü Göster--</option>
+                                @foreach (var item in ViewBag.typeList)
+                                {
+                                    <option value="@item.Id">@item.Tip</option>
+                                }
+                            </select>
+                            <div id="dateRangeInputs" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md mb-3">
+                                        <label for="startDate">Başlangıç Tarihi:</label>
+                                        <input type="date" class="form-control" id="startDate" name="startDate">
+                                    </div>
+                                    <br />
+                                    <div class="col-md mb-3">
+                                        <label for="endDate">Bitiş Tarihi:</label>
+                                        <input type="date" class="form-control" id="endDate" name="endDate">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sonuçları Getir</button>
+                        </form>
+                    </div>
+                    <h5 class="card-title">Sistem Kullanıcıları</h5>
+                    <!-- Table with stripped rows -->
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr class="text-center">
+                                <th>#</th>
+                                <th>Kurum Adı</th>
+                                <th>Ad</th>
+                                <th>Soyad</th>
+                                <th>Kullanıcı Adı</th>
+                                <th>Eklenme Tarihi</th>
+                                <th>Kullanıcı Tipi</th>
+                                <th>Durumu</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-center">
+                                    <th>@sira</th>
+                                    <td>@item.SchoolName</td>
+                                    <td>@item.UserName</td>
+                                    <td>@item.UserSurName</td>
+                                    <td>@item.UserUserName</td>
+                                    <td>@item.InsertedDate</td>
+                                    <td>@item.UserTypeName</td>
+                                    @if (item.IsActive)
+                                    {
+                                        <td class="text-success">Aktif</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-danger">Pasif</td>
+                                    }
+                                    <td>
+                                        <button type="button" data-toggle="modal" data-target=@("#UpdateModal-" + @item.Id) data-url="@Url.Action($"UpdateTerminal/{item.Id}")" class="btn btn-primary">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        @* @await Html.PartialAsync("_UpdateTerminalModal", item) *@
+                                    </td>
+                                </tr>
+                                sira++;
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--------------------------------------------------------------------------------------------------------------------------------------->
+<!-- Ekle Modal -->
+<div class="modal fade" id="AddSysUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Ekle</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/SysUser/AddSysUser">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="sinifAdi" class="form-label fw-bold">Kişi Adı:</label>
+                                <input type="text" class="form-control" id="sinifAdi" name="UserName" required>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label fw-bold">Kişi Soyadı:</label>
+                                <input type="text" class="form-control" id="aciklama" name="UserSurName" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="sinifAdi" class="form-label fw-bold">Kullanıcı Adı:</label>
+                                <input type="text" class="form-control" id="sinifAdi" name="UserUserName" required>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label fw-bold">Kullanıcı Tipi:</label>
+                                <select class="form-select mb-3" aria-label="Default select example" id="dateSelector" name="UserType">
+                                    @foreach (var item in ViewBag.typeList)
+                                    {
+                                        <option class="text-center" value="@item.Id">@item.Tip</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="sinifAdi" class="form-label fw-bold">Şifre:</label>
+                                <input type="text" class="form-control" id="sinifAdi" name="Password" required>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label fw-bold">Şifre Tekrar:</label>
+                                <input type="text" class="form-control" id="aciklama" name="ConfirmPassword" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>v>
+</div>
+
+

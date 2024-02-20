@@ -12,6 +12,7 @@ namespace EYOkulProjectWebUI.DAL
             public DbSet<TransactionsModel> TBL_TRANSACTIONS { get; set; }
             public DbSet<TerminalModel> TBL_TERMINALS { get; set; }
             public DbSet<UserModel> TBL_A_USERS { get; set; }
+            public DbSet<UserTypeModel> TBL_TYPES { get; set; }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {

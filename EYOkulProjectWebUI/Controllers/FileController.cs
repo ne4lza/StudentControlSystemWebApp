@@ -113,13 +113,13 @@ namespace EYOkulProjectWebUI.Controllers
             if (file == null || file.Length == 0)
             {
                 TempData["Alert"] = "Dosya seçilmedi.";
-                return RedirectToAction("Index");
+                return View("Index");
             }
             string fileExtension = Path.GetExtension(file.FileName);
             if (fileExtension != ".xlsx" && fileExtension != ".xls")
             {
                 TempData["Alert"] = "Geçersiz dosya formatı. Lütfen bir Excel dosyası (.xlsx veya .xls) yükleyin.";
-                return View();
+                return View("Index");
             }
             using (var stream = new MemoryStream())
             {
@@ -154,10 +154,11 @@ namespace EYOkulProjectWebUI.Controllers
             }
             if (errorMessages.Any())
             {
-                return RedirectToAction("Index",errorMessages);
+                ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
+                return View("Index", errorMessages);
             }
             TempData["Alert"] = "İşlem tamamlandı.";
-            return RedirectToAction("Index");
+            return View("Index");
         }
 
     }

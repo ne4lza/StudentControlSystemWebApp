@@ -11,5 +11,6 @@
         public DateTime InsertedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public int SysUserId { get; set; }
+        public int SchoolId { get; set; }
     }
 }

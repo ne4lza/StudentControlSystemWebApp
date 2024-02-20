@@ -17,7 +17,7 @@ namespace EYOkulProjectWebUI.Controllers
 
         public IActionResult Index()
         {
-            var model = _context.TBL_TERMINALS.Where(x => x.SysUserId == HttpContext.Session.GetInt32("SysUserId")).ToList();
+            var model = _context.TBL_TERMINALS.Where(x => x.SchoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             return View(model);
         }
         [HttpPost]
