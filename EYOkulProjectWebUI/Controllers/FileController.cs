@@ -17,18 +17,24 @@ namespace EYOkulProjectWebUI.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             return View();
         }
-
         [HttpPost]
-        public IActionResult ReadExcelFile(IFormFile file)
+        public IActionResult Index(IFormFile file)
         {
+            List<string> errorMessages = new List<string>();
             if (file == null || file.Length == 0)
             {
-                ViewBag.Message = "Dosya seçilmedi.";
+                TempData["Alert"] = "Dosya seçilmedi.";
                 return View();
             }
-
+            string fileExtension = Path.GetExtension(file.FileName);
+            if (fileExtension != ".xlsx" && fileExtension != ".xls")
+            {
+                TempData["Alert"] = "Geçersiz dosya formatı. Lütfen bir Excel dosyası (.xlsx veya .xls) yükleyin.";
+                return View();
+            }
             using (var stream = new MemoryStream())
             {
                 file.CopyTo(stream);
@@ -54,7 +60,20 @@ namespace EYOkulProjectWebUI.Controllers
                         .Select(x => (int?)x.Id)
                     .   FirstOrDefault();
 
-
+                        var existingTckn = _context.TBL_STUDENTS.FirstOrDefault(s => s.StudentTckn == studentTckn);
+                        if (existingTckn != null)
+                        {
+                            // Öğrenci zaten var, kullanıcıya göster
+                            errorMessages.Add($"{studentTckn} TCKN'li öğrenci daha önce kayıt edilmiş.");
+                            continue; // Bir sonraki öğrenciye geç
+                        }
+                        var existingStudentNumber = _context.TBL_STUDENTS.FirstOrDefault(s => s.StudentTckn == studentTckn);
+                        if (existingStudentNumber != null)
+                        {
+                            // Öğrenci zaten var, kullanıcıya göster
+                            errorMessages.Add($"{studentNumber} okul numaralı öğrenci öğrenci daha önce kayıt edilmiş.");
+                            continue; // Bir sonraki öğrenciye geç
+                        }
                         // Veritabanına kaydetmek için bir öğrenci nesnesi oluşturun ve değerleri atayın
                         StudentsModel student = new StudentsModel()
                         {
@@ -79,7 +98,65 @@ namespace EYOkulProjectWebUI.Controllers
                     _context.SaveChanges();
                 }
             }
-            ViewBag.Message = "İşlem tamamlandı.";
+            if (errorMessages.Any())
+            {
+                return View(errorMessages);
+            }
+            TempData["Alert"] = "İşlem tamamlandı.";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult TopluSinifGuncelle(IFormFile file,int selectClass)
+        {
+            List<string> errorMessages = new List<string>();
+            if (file == null || file.Length == 0)
+            {
+                TempData["Alert"] = "Dosya seçilmedi.";
+                return RedirectToAction("Index");
+            }
+            string fileExtension = Path.GetExtension(file.FileName);
+            if (fileExtension != ".xlsx" && fileExtension != ".xls")
+            {
+                TempData["Alert"] = "Geçersiz dosya formatı. Lütfen bir Excel dosyası (.xlsx veya .xls) yükleyin.";
+                return View();
+            }
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0]; // Excel dosyasındaki ilk sayfa
+
+                    int rowCount = worksheet.Dimension.Rows;
+
+                    for (int row = 2; row <= rowCount; row++) // Başlık satırını atlayarak işlem yapın
+                    {
+                        decimal studentTckn = Convert.ToDecimal(worksheet.Cells[row, 1].Value);
+
+                        var missingTckn = _context.TBL_STUDENTS.FirstOrDefault(s => s.StudentTckn == studentTckn);
+                        if (missingTckn == null)
+                        {
+                            // Öğrenci zaten var, kullanıcıya göster
+                            errorMessages.Add($"{studentTckn} TCKN'li öğrenci sistemde mevcut değil.");
+                            continue; // Bir sonraki öğrenciye geç
+                        }
+                        // Veritabanına kaydetmek için bir öğrenci nesnesi oluşturun ve değerleri atayın
+                        var student = _context.TBL_STUDENTS.Where(x=>x.StudentTckn == studentTckn).FirstOrDefault();
+                        student.ClassId = selectClass;
+
+                        _context.TBL_STUDENTS.Update(student);
+                    }
+
+                    _context.SaveChanges();
+                }
+            }
+            if (errorMessages.Any())
+            {
+                return RedirectToAction("Index",errorMessages);
+            }
+            TempData["Alert"] = "İşlem tamamlandı.";
             return RedirectToAction("Index");
         }
 

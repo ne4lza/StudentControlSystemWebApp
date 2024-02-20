@@ -1,12 +1,121 @@
-﻿
+﻿@model List<String>
 @{
     ViewData["Title"] = "Index";
+    int sira = 1;
 }
-<form method="post" enctype="multipart/form-data" action="/File/ReadExcelFile">
-    <div class="form-group">
-        <label for="file">Excel Dosyası Seç:</label>
-        <input type="file" name="file" id="file" class="form-control-file">
-    </div>
-    <button type="submit" class="btn btn-primary">Yükle</button>
-</form>
 
+@if (TempData["Alert"] != null)
+{
+    <div class="alert alert-primary" role="alert">
+        @TempData["Alert"]
+    </div>
+
+}
+@if (Model != null && Model.Count > 0)
+{
+    <div class="col-12">
+        <div class="card mb-4">
+            <button type="button" class="btn-close" aria-label="Close" onclick="closeCard()"></button>
+            <div class="card-body">
+                
+                <h5 class="card-title">Terminaller</h5>
+                <!-- Table with stripped rows -->
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr class="text-center">
+                            <th>#</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-center">
+                                <td>@sira</td>
+                                <td>@item</td>
+                            </tr>
+                            sira++;
+                        }
+                    </tbody>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+}
+<div class="pagetitle">
+    <h1>Öğrenci-Dosya İşlemleri</h1>
+</div>
+<div class="col-12">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Toplu Öğrenci Girişi</h5>
+            <form method="post" enctype="multipart/form-data" action="/File/Index">
+                <div class="form-group mb-2 mt-3">
+                    <input type="file" name="file" id="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-file-earmark-arrow-up me-1"></i>Verileri Aktar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Toplu Sınıf Atama</h5>
+            <form method="post" enctype="multipart/form-data" action="/File/TopluSinifGuncelle">
+                <div class="form-group mb-2 mt-3">
+                    <select class="form-select mb-3" aria-label="Default select example" id="dateSelector" name="selectClass">
+                        @foreach (var item in ViewBag.classList)
+                        {
+                            <option value="@item.Id">@item.ClassName</option>
+                        }
+                    </select>
+                    <input type="file" name="file" id="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-file-earmark-arrow-up me-1"></i>Öğrenci Sınıflarını Güncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="pagetitle">
+    <h1>Kart-Dosya İşlemleri</h1>
+</div>
+<div class="col-12">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Toplu Kart Girişi</h5>
+            <form method="post" enctype="multipart/form-data" action="/File/Index">
+                <div class="form-group mb-2 mt-3">
+                    <input type="file" name="file" id="file" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-file-earmark-arrow-up me-1"></i>Verileri Aktar</button>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        document.getElementById("copyButton").addEventListener("click", function () {
+            var errorLogElement = document.getElementById("errorLog");
+            var errorMessages = errorLogElement.innerText; // Hata mesajlarını içeren metni al
+            var rowCount = (errorMessages.match(/\n/g) || []).length + 1; // Satır sayısını hesapla
+            navigator.clipboard.writeText(errorMessages); // Metni panoya kopyala
+            alert(rowCount + " satır kopyalandı."); // Kullanıcıya bilgi ver (opsiyonel)
+        });
+    </script>
+    <script>
+        function closeCard() {
+            var card = document.querySelector('.card');
+            card.classList.add('card-close-animation'); // Animasyon sınıfını ekle
+
+            // Kartı kaldırmak için biraz bekle ve sonra kaldır
+            setTimeout(function () {
+                card.style.display = 'none';
+            }, 500); // Animasyon süresi kadar beklet
+        }
+    </script>
+
+}
