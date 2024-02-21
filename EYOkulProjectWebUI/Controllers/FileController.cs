@@ -23,6 +23,7 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public IActionResult Index(IFormFile file)
         {
+            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             List<string> errorMessages = new List<string>();
             if (file == null || file.Length == 0)
             {
@@ -89,19 +90,32 @@ namespace EYOkulProjectWebUI.Controllers
                             UpdatedDate = DateTime.Now,
                             SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
                         };
-
-                        // Veritabanına öğrenciyi ekle
                         _context.TBL_STUDENTS.Add(student);
+                        _context.SaveChanges();
+                        LogModel log = new LogModel()
+                        {
+                            ActivityType = "INSERT",
+                            SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
+                            RecordId = student.Id,
+                            RecordName = "STUDENT",
+                            IsActive = student.IsActive,
+                            IsDeleted = student.IsDeleted,
+                            EventTime = DateTime.Now,
+                        };
+                        _context.TBL_LOGS.Add(log);
+                        _context.SaveChanges();
                     }
 
                     // Değişiklikleri veritabanına kaydet
-                    _context.SaveChanges();
+                    
                 }
             }
             if (errorMessages.Any())
             {
+                ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
                 return View(errorMessages);
             }
+            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             TempData["Alert"] = "İşlem tamamlandı.";
             return View();
         }

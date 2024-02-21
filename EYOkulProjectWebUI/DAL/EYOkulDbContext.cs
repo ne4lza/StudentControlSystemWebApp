@@ -13,6 +13,7 @@ namespace EYOkulProjectWebUI.DAL
             public DbSet<TerminalModel> TBL_TERMINALS { get; set; }
             public DbSet<UserModel> TBL_A_USERS { get; set; }
             public DbSet<UserTypeModel> TBL_TYPES { get; set; }
+            public DbSet<LogModel> TBL_LOGS { get; set; }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
