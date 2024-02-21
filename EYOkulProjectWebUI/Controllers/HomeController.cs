@@ -27,11 +27,11 @@ namespace EYOkulProjectWebUI.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Index(string UserName, string Password)
+        public async Task<IActionResult> Index(string UserUserName, string Password)
         {
             UserModel userModel = new UserModel();
             string hashPassword = userModel.HashPassword(Password);
-            var model = _context.TBL_A_USERS.Where(x => x.UserUserName == UserName && x.Password == hashPassword).FirstOrDefault();
+            var model = _context.TBL_A_USERS.Where(x => x.UserUserName == UserUserName && x.Password == hashPassword).FirstOrDefault();
             if (model != null)
             {
                 if (!model.IsActive)

@@ -47,8 +47,8 @@ namespace EYOkulProjectWebUI.Subscription.Concreate
                                TransactionId = trmodel.Id,
                                StudentName = ogrmodel.StudentName,
                                StudentSurname = ogrmodel.StudentSurName,
-                               GuardianName = grdModel.GuardianName,
-                               GuardianSurName = grdModel.GuardianSurName,
+                               GuardianName = grdModel.UserName,
+                               GuardianSurName = grdModel.UserLastName,
                                ClassName = clssmodel.ClassName,
                                Image = trmodel.Image,
                            };

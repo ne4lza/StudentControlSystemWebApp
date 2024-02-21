@@ -5,7 +5,7 @@ namespace EYOkulProjectWebUI.DAL
 {
     public class EYOkulDbContext : DbContext
     {
-            public DbSet<GuardiansModel> TBL_CARDS { get; set; }
+            public DbSet<CardModel> TBL_CARDS { get; set; }
             public DbSet<StudentsModel> TBL_STUDENTS { get; set; }
             public DbSet<ClassModel> TBL_CLASS { get; set; }
             public DbSet<ScoolModel> TBL_SCOOLS { get; set; }

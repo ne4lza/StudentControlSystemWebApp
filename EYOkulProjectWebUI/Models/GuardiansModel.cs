@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Principal;
 
 namespace EYOkulProjectWebUI.Models
 {
@@ -20,7 +21,10 @@ namespace EYOkulProjectWebUI.Models
             public DateTime? InsertedDate { get; set; }
             public DateTime? UpdatedDate { get; set; }
             public int SysUserId { get; set; }
-
+            public int UserId { get; set; }
             public int Type { get; set; }
-        }
+
+        ////
+        
+    }
     }

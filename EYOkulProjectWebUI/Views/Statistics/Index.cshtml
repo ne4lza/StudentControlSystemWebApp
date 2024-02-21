@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<div class="pagetitle">
+    <h1>İstatistikler</h1>
+</div>
+<div class="pagetitle mt-5">
+    <h1>İşlem Sayıları</h1>
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="card info-card sales-card w-auto">
+            <div class="card-body">
+                <h5 class="card-title">Bugün Kart Okutma Sayısı</h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-wifi"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>145</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card info-card sales-card w-auto">
+
+            <div class="card-body">
+                <h5 class="card-title">Dün Kart Okutma Sayısı</h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-wifi"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>145</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card info-card sales-card w-auto">
+
+            <div class="card-body">
+                <h5 class="card-title">Bu Hafta Kart Okutma Sayısı</h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-wifi"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>145</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="pagetitle mt-5">
+    <h1>Okul Verileri</h1>
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="card info-card sales-card w-auto">
+            <div class="card-body">
+                <h5 class="card-title">Toplam Öğrenci Sayısı</h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-person-lines-fill"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>@ViewBag.studentCount</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card info-card sales-card w-auto">
+
+            <div class="card-body">
+                <h5 class="card-title">Toplam Sınıf Sayısı</h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-journal"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>@ViewBag.classCount</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card info-card sales-card w-auto">
+
+            <div class="card-body">
+                <h5 class="card-title">Toplam Kart Sayısı</h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-person-vcard"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>@ViewBag.cardCount</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
