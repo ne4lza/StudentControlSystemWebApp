@@ -2,6 +2,7 @@
 using EYOkulProjectWebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace EYOkulProjectWebUI.Controllers
 {
@@ -64,24 +65,49 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public IActionResult UpdateSinif(ClassModel cl)
         {
-            cl.UpdateDate = DateTime.Now;
-            _context.TBL_CLASS.Update(cl);
+            var existingClass = _context.TBL_CLASS.Find(cl.Id);
+
+            if (existingClass == null)
+            {
+                return NotFound();
+            }
+
+            List<string> updatedFields = new List<string>();
+
+            PropertyInfo[] properties = typeof(ClassModel).GetProperties();
+            foreach (var property in properties)
+            {
+                var existingValue = property.GetValue(existingClass);
+                var updatedValue = property.GetValue(cl);
+
+                if (!object.Equals(existingValue, updatedValue))
+                {
+                    updatedFields.Add(property.Name);
+                    property.SetValue(existingClass, updatedValue);
+                }
+            }
+
+            existingClass.UpdateDate = DateTime.Now;
+
             _context.SaveChanges();
+
             LogModel log = new LogModel()
             {
                 ActivityType = "UPDATE",
                 SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
                 RecordId = cl.Id,
                 RecordName = "CLASS",
+                UpdatedFields = string.Join(",", updatedFields),
                 IsActive = cl.IsActive,
                 IsDeleted = cl.IsDeleted,
                 EventTime = DateTime.Now,
             };
             _context.TBL_LOGS.Add(log);
             _context.SaveChanges();
-            TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
-            return RedirectToAction("Index","Sinif");
-        }
 
+            TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
+            return RedirectToAction("Index", "Sinif");
+        }
+            
     }
 }
