@@ -17,13 +17,11 @@ namespace EYOkulProjectWebUI.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             return View();
         }
         [HttpPost]
         public IActionResult Index(IFormFile file)
         {
-            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             List<string> errorMessages = new List<string>();
             if (file == null || file.Length == 0)
             {
@@ -101,16 +99,14 @@ namespace EYOkulProjectWebUI.Controllers
             }
             if (errorMessages.Any())
             {
-                ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
                 return View(errorMessages);
             }
-            ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             TempData["Alert"] = "İşlem tamamlandı.";
             return View();
         }
 
         [HttpPost]
-        public IActionResult TopluSinifGuncelle(IFormFile file,int selectClass)
+        public IActionResult TopluSinifGuncelle(IFormFile file)
         {
             List<string> errorMessages = new List<string>();
             if (file == null || file.Length == 0)
@@ -137,7 +133,11 @@ namespace EYOkulProjectWebUI.Controllers
                     for (int row = 2; row <= rowCount; row++) // Başlık satırını atlayarak işlem yapın
                     {
                         decimal studentTckn = Convert.ToDecimal(worksheet.Cells[row, 1].Value);
-
+                        string className = worksheet.Cells[row, 2].Value?.ToString();
+                        int? classId = _context.TBL_CLASS
+                        .Where(x => x.ClassName == className)
+                        .Select(x => (int?)x.Id)
+                    .FirstOrDefault();
                         var missingTckn = _context.TBL_STUDENTS.FirstOrDefault(s => s.StudentTckn == studentTckn);
                         if (missingTckn == null)
                         {
@@ -147,7 +147,7 @@ namespace EYOkulProjectWebUI.Controllers
                         }
                         // Veritabanına kaydetmek için bir öğrenci nesnesi oluşturun ve değerleri atayın
                         var student = _context.TBL_STUDENTS.Where(x=>x.StudentTckn == studentTckn).FirstOrDefault();
-                        student.ClassId = selectClass;
+                        student.ClassId = (int)classId;
 
                         _context.TBL_STUDENTS.Update(student);
                     }
@@ -157,7 +157,6 @@ namespace EYOkulProjectWebUI.Controllers
             }
             if (errorMessages.Any())
             {
-                ViewBag.classList = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
                 return View("Index", errorMessages);
             }
             TempData["Alert"] = "İşlem tamamlandı.";
