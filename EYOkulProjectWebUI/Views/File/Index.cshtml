@@ -3,6 +3,10 @@
     ViewData["Title"] = "Index";
     int sira = 1;
 }
+
+
+
+
 @if (TempData["Alert"] != null)
 {
     <div class="alert alert-primary" role="alert">
@@ -27,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewBag.ErrorMessages)
+                        @foreach (var item in Model)
                         {
                             <tr class="text-center">
                                 <td>@sira</td>
@@ -96,15 +100,6 @@
     </div>
 </div>
 @section Scripts{
-    <script>
-        document.getElementById("copyButton").addEventListener("click", function () {
-            var errorLogElement = document.getElementById("errorLog");
-            var errorMessages = errorLogElement.innerText; // Hata mesajlarını içeren metni al
-            var rowCount = (errorMessages.match(/\n/g) || []).length + 1; // Satır sayısını hesapla
-            navigator.clipboard.writeText(errorMessages); // Metni panoya kopyala
-            alert(rowCount + " satır kopyalandı."); // Kullanıcıya bilgi ver (opsiyonel)
-        });
-    </script>
     <script>
         function closeCard() {
             var card = document.querySelector('.card');

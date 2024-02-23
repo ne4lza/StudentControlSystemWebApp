@@ -131,46 +131,11 @@ namespace EYOkulProjectWebUI.Controllers
         [HttpPost]
         public IActionResult UpdateStudent(StudentsModel updatedStudent)
         {
-            var existingStudent = _context.TBL_STUDENTS.Find(updatedStudent.Id);
-
-            if (existingStudent == null)
-            {
-                return NotFound();
-            }
-
-            List<string> updatedFields = new List<string>();
-
-            PropertyInfo[] properties = typeof(StudentsModel).GetProperties();
-            foreach (var property in properties)
-            {
-                var existingValue = property.GetValue(existingStudent);
-                var updatedValue = property.GetValue(updatedStudent);
-
-                if (!object.Equals(existingValue, updatedValue))
-                {
-                    updatedFields.Add(property.Name);
-                    property.SetValue(existingStudent, updatedValue);
-                }
-            }
-
-            existingStudent.UpdatedDate = DateTime.Now;
-
+            updatedStudent.UpdatedDate = DateTime.Now;
+           
+            updatedStudent.SysUserId = (int) HttpContext.Session.GetInt32("SysUserId");
+            _context.TBL_STUDENTS.Update(updatedStudent);
             _context.SaveChanges();
-
-            LogModel log = new LogModel()
-            {
-                ActivityType = "UPDATE",
-                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
-                RecordId = updatedStudent.Id,
-                RecordName = "STUDENT",
-                UpdatedFields = string.Join(",", updatedFields),
-                IsActive = updatedStudent.IsActive,
-                IsDeleted = updatedStudent.IsDeleted,
-                EventTime = DateTime.Now,
-            };
-            _context.TBL_LOGS.Add(log);
-            _context.SaveChanges();
-
             TempData["Alert"] = "Öğrenci Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Student");
         }

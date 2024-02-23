@@ -65,16 +65,17 @@ namespace EYOkulProjectWebUI.Controllers
                         if (existingTckn != null)
                         {
                             // Öğrenci zaten var, kullanıcıya göster
-                            errorMessages.Add($"{studentTckn} TCKN'li öğrenci daha önce kayıt edilmiş.");
+                            errorMessages.Add($"!! {studentTckn} TCKN'li öğrenci daha önce kayıt edilmiş.");
                             continue; // Bir sonraki öğrenciye geç
                         }
                         var existingStudentNumber = _context.TBL_STUDENTS.FirstOrDefault(s => s.StudentTckn == studentTckn);
                         if (existingStudentNumber != null)
                         {
                             // Öğrenci zaten var, kullanıcıya göster
-                            errorMessages.Add($"{studentNumber} okul numaralı öğrenci öğrenci daha önce kayıt edilmiş.");
+                            errorMessages.Add($"!! {studentNumber} okul numaralı öğrenci öğrenci daha önce kayıt edilmiş.");
                             continue; // Bir sonraki öğrenciye geç
                         }
+                        errorMessages.Add($"✓ {studentTckn} TCKN'li öğrenci sisteme dahil edildi.");
                         // Veritabanına kaydetmek için bir öğrenci nesnesi oluşturun ve değerleri atayın
                         StudentsModel student = new StudentsModel()
                         {
@@ -91,18 +92,6 @@ namespace EYOkulProjectWebUI.Controllers
                             SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
                         };
                         _context.TBL_STUDENTS.Add(student);
-                        _context.SaveChanges();
-                        LogModel log = new LogModel()
-                        {
-                            ActivityType = "INSERT",
-                            SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
-                            RecordId = student.Id,
-                            RecordName = "STUDENT",
-                            IsActive = student.IsActive,
-                            IsDeleted = student.IsDeleted,
-                            EventTime = DateTime.Now,
-                        };
-                        _context.TBL_LOGS.Add(log);
                         _context.SaveChanges();
                     }
 

@@ -40,6 +40,23 @@
 </head>
 
 <body>
+    <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="z-index: 9999";>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p class="mb-0">İşleminiz yapılıyor...</p>
+                        <p class="mb-0 text-sm">Bu İşlem Biraz Zaman Alabilir...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -220,6 +237,38 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('.modal').modal({
+                backdrop: 'static', // Modalın dışına tıklamayı devre dışı bırak
+                keyboard: false // Klavye kısayollarını devre dışı bırak
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Sayfa yüklendiğinde modal gizle
+            $('#loadingModal').modal('hide');
+
+            // Form gönderildiğinde modalı göster
+            $(document).on('submit', 'form', function () {
+                $('#loadingModal').modal('show');
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Modal açılış animasyonu
+            $('#loadingModal').on('show.bs.modal', function () {
+                $(this).fadeIn();
+            });
+
+            // Modal kapanış animasyonu
+            $('#loadingModal').on('hide.bs.modal', function () {
+                $(this).fadeOut();
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function () {

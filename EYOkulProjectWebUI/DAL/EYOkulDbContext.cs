@@ -13,9 +13,7 @@ namespace EYOkulProjectWebUI.DAL
             public DbSet<TerminalModel> TBL_TERMINALS { get; set; }
             public DbSet<UserModel> TBL_A_USERS { get; set; }
             public DbSet<UserTypeModel> TBL_TYPES { get; set; }
-            public DbSet<LogModel> TBL_LOGS { get; set; }
-
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
 
                 //optionsBuilder.UseSqlServer("Server =DESKTOP-OIDPVCJ;Database =YeDaSis;User Id=sa; Password=wsxEDCrfv123; TrustServerCertificate=true;");

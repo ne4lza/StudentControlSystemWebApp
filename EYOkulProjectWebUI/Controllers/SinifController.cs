@@ -40,18 +40,6 @@ namespace EYOkulProjectWebUI.Controllers
             };
             _context.TBL_CLASS.Add(model);
             _context.SaveChanges();
-            LogModel log = new LogModel()
-            {
-                ActivityType = "INSERT",
-                SysUserId = (int) HttpContext.Session.GetInt32("SysUserId"),
-                RecordId = model.Id,
-                RecordName = "CLASS",
-                IsActive = model.IsActive,
-                IsDeleted = model.IsDeleted,
-                EventTime = DateTime.Now,
-            };
-            _context.TBL_LOGS.Add(log);
-            _context.SaveChanges();
             TempData["Alert"] = "Sınıf Ekleme İşlemi Tamamlandı.";
             return RedirectToAction("Index","Sinif");
         }
@@ -90,21 +78,6 @@ namespace EYOkulProjectWebUI.Controllers
             existingClass.UpdateDate = DateTime.Now;
 
             _context.SaveChanges();
-
-            LogModel log = new LogModel()
-            {
-                ActivityType = "UPDATE",
-                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
-                RecordId = cl.Id,
-                RecordName = "CLASS",
-                UpdatedFields = string.Join(",", updatedFields),
-                IsActive = cl.IsActive,
-                IsDeleted = cl.IsDeleted,
-                EventTime = DateTime.Now,
-            };
-            _context.TBL_LOGS.Add(log);
-            _context.SaveChanges();
-
             TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Sinif");
         }
