@@ -1,5 +1,6 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
+using EYOkulProjectWebUI.Models.LogModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
@@ -18,14 +19,14 @@ namespace EYOkulProjectWebUI.Controllers
 
         public IActionResult Index()
         {
-            var model = _context.TBL_CLASS.Where(x=>x.ScoolId ==HttpContext.Session.GetInt32("SchoolId")).ToList();
+            var model = _context.TBL_CLASS.Where(x => x.ScoolId == HttpContext.Session.GetInt32("SchoolId")).ToList();
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddSinif(ClassModel cl) 
+        public IActionResult AddSinif(ClassModel cl)
         {
-            
+
             ClassModel model = new ClassModel()
             {
                 ClassName = cl.ClassName,
@@ -38,49 +39,54 @@ namespace EYOkulProjectWebUI.Controllers
                 SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
 
             };
+            Class_H_Model class_H_Model = new Class_H_Model()
+            {
+                ProccessType = "INSERT",
+                ClassName = cl.ClassName,
+                Desciription = cl.Desciription,
+                InsertedDate = DateTime.Now,
+                IsActive = true,
+                IsDeleted = false,
+                UpdateDate = DateTime.Now,
+                ScoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
+                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
+            };
+            _context.TBL_H_CLASS.Add(class_H_Model);
             _context.TBL_CLASS.Add(model);
             _context.SaveChanges();
             TempData["Alert"] = "Sınıf Ekleme İşlemi Tamamlandı.";
-            return RedirectToAction("Index","Sinif");
+            return RedirectToAction("Index", "Sinif");
         }
         [HttpGet]
         public IActionResult UpdateSinif(int id)
         {
-            
-            var model= _context.TBL_CLASS.Where(x=>x.Id == id).FirstOrDefault();
+
+            var model = _context.TBL_CLASS.Where(x => x.Id == id).FirstOrDefault();
             return PartialView("_UpdateSinifModal", model);
         }
         [HttpPost]
         public IActionResult UpdateSinif(ClassModel cl)
         {
-            var existingClass = _context.TBL_CLASS.Find(cl.Id);
-
-            if (existingClass == null)
+            cl.UpdateDate = DateTime.Now;
+            cl.SysUserId = (int)HttpContext.Session.GetInt32("SysUserId");
+            _context.TBL_CLASS.Update(cl);
+            Class_H_Model class_H_Model = new Class_H_Model()
             {
-                return NotFound();
-            }
-
-            List<string> updatedFields = new List<string>();
-
-            PropertyInfo[] properties = typeof(ClassModel).GetProperties();
-            foreach (var property in properties)
-            {
-                var existingValue = property.GetValue(existingClass);
-                var updatedValue = property.GetValue(cl);
-
-                if (!object.Equals(existingValue, updatedValue))
-                {
-                    updatedFields.Add(property.Name);
-                    property.SetValue(existingClass, updatedValue);
-                }
-            }
-
-            existingClass.UpdateDate = DateTime.Now;
-
+                ProccessType = "UPDATE",
+                ClassName = cl.ClassName,
+                Desciription = cl.Desciription,
+                InsertedDate = cl.InsertedDate,
+                IsActive = cl.IsActive,
+                IsDeleted = cl.IsDeleted,
+                UpdateDate = DateTime.Now,
+                ScoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
+                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
+            };
+            _context.TBL_H_CLASS.Add(class_H_Model);
             _context.SaveChanges();
             TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Sinif");
         }
-            
+
     }
 }

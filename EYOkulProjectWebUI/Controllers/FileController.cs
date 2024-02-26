@@ -1,5 +1,6 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
+using EYOkulProjectWebUI.Models.LogModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
@@ -90,11 +91,26 @@ namespace EYOkulProjectWebUI.Controllers
                             SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
                         };
                         _context.TBL_STUDENTS.Add(student);
-                        _context.SaveChanges();
+                        Student_H_Model student_H_Model = new Student_H_Model()
+                        {
+                            ProccessType = "INSERT",
+                            StudentName = studentName,
+                            StudentSurName = studentSurName,
+                            StudentNumber = studentNumber,
+                            StudentTckn = studentTckn,
+                            ScoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
+                            ClassId = Convert.ToInt32(classId),
+                            IsActive = true,
+                            IsDeleted = false,
+                            InsertedDate = DateTime.Now,
+                            UpdatedDate = DateTime.Now,
+                            SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
+                        };
+                        _context.TBL_H_STUDENTS.Add(student_H_Model);
                     }
-
+                    _context.SaveChanges();
                     // Değişiklikleri veritabanına kaydet
-                    
+
                 }
             }
             if (errorMessages.Any())
@@ -150,6 +166,16 @@ namespace EYOkulProjectWebUI.Controllers
                         student.ClassId = (int)classId;
 
                         _context.TBL_STUDENTS.Update(student);
+                        Student_H_Model student_H_Model = new Student_H_Model()
+                        {
+                            ProccessType = "UPDATE",
+                            StudentTckn = studentTckn,
+                            ScoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
+                            ClassId = Convert.ToInt32(classId),
+                            UpdatedDate = DateTime.UtcNow,
+                            SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
+                        };
+                        _context.TBL_H_STUDENTS.Add(student_H_Model);
                     }
 
                     _context.SaveChanges();

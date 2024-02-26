@@ -1,15 +1,21 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using EYOkulProjectWebUI.DAL;
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace EYOkulProjectWebUI.Hubs
 {
     public class TransactionHub : Hub
     {
+        private readonly EYOkulDbContext _context;
 
-        public async Task sendmessageAsync()
+        public TransactionHub(EYOkulDbContext context)
         {
+            _context = context;
+        }
 
-        await Clients.All.SendAsync("receiveMessage","Merhaba");
-
+        public async Task SendTransactions()
+        {
+            await Clients.All.SendAsync("TransactionsReceived", "Hello");
         }
     }
 }

@@ -28,14 +28,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
+builder.Services.AddScoped<IService_Transaction,Service_Transaction<TransactionsModel>>();
 
 
 
 
-
-
-// Servislerin konteynýra eklenmesi
-builder.Services.AddSingleton<Service_Transaction<TransactionsModel>>();
 
 var app = builder.Build();
 
@@ -45,7 +42,7 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseDatabaseSubsription<Service_Transaction<TransactionsModel>>("TBL_TRANSACTIONS"); // Fixed typo in "Subscription"
+app.UseDatabaseSubsription<Service_Transaction<TransactionsModel>>("TBL_MESSAGE"); // Fixed typo in "Subscription"
 
 // Endpoint'lerin tanýmlanmasý
 app.UseEndpoints(endpoints =>

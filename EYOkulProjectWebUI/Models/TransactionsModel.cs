@@ -30,6 +30,6 @@ namespace EYOkulProjectWebUI.Models
         public string StudentSurName { get; set; }
         public string CardNumber { get; set; }
         public string TerminalName { get; set; }
-        public TimeSpan? InsertedTime { get; set; }
+        public string? InsertedTime { get; set; }
     }
 }

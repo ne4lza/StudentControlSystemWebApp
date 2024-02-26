@@ -1,5 +1,6 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
+using EYOkulProjectWebUI.Models.LogModels;
 using EYOkulProjectWebUI.ViewModels.Student;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -121,6 +122,23 @@ namespace EYOkulProjectWebUI.Controllers
             }
             else
             {
+                Student_H_Model student_H_Model = new Student_H_Model()
+                {
+                    ProccessType = "INSERT",
+                    StudentName = studentViewModel.studentsModel.StudentName,
+                    StudentSurName = studentViewModel.studentsModel.StudentSurName,
+                    StudentNumber = studentViewModel.studentsModel.StudentNumber,
+                    StudentTckn = studentViewModel.studentsModel.StudentTckn,
+                    ClassId = studentViewModel.studentsModel.ClassId,
+                    ScoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
+                    IsActive = true,
+                    IsDeleted = false,
+                    InsertedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
+                    SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
+                };
+                _context.TBL_H_STUDENTS.Add(student_H_Model);
+                _context.SaveChanges();
                 _context.TBL_STUDENTS.Add(studentModel);
                 _context.SaveChanges();
                 TempData["Alert"] = "Öğrenci Ekleme İşlemi Başarıyla Tamamlandı.";
@@ -135,6 +153,22 @@ namespace EYOkulProjectWebUI.Controllers
            
             updatedStudent.SysUserId = (int) HttpContext.Session.GetInt32("SysUserId");
             _context.TBL_STUDENTS.Update(updatedStudent);
+            Student_H_Model student_H_Model = new Student_H_Model()
+            {
+                ProccessType = "UPDATE",
+                StudentName = updatedStudent.StudentName,
+                StudentSurName = updatedStudent.StudentSurName,
+                StudentNumber = updatedStudent.StudentNumber,
+                StudentTckn = updatedStudent.StudentTckn,
+                ClassId = updatedStudent.ClassId,
+                ScoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
+                IsActive = updatedStudent.IsActive,
+                IsDeleted = updatedStudent.IsDeleted,
+                InsertedDate = updatedStudent.InsertedDate,
+                UpdatedDate = DateTime.Now,
+                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
+            };
+            _context.Add(student_H_Model);
             _context.SaveChanges();
             TempData["Alert"] = "Öğrenci Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Student");

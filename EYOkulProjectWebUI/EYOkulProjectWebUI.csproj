@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Subscription\Abstract\**" />
+    <Compile Remove="wwwroot\Template\**" />
+    <Content Remove="Subscription\Abstract\**" />
+    <Content Remove="wwwroot\Template\**" />
+    <EmbeddedResource Remove="Subscription\Abstract\**" />
+    <EmbeddedResource Remove="wwwroot\Template\**" />
+    <None Remove="Subscription\Abstract\**" />
+    <None Remove="wwwroot\Template\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.0.9" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.15" />
@@ -15,15 +26,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SqlTableDependency" Version="8.5.8" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Subscription\Abstract\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Template\.DS_Store" />
-    <None Include="wwwroot\Template\.github\workflows\main.yml" />
   </ItemGroup>
 
 </Project>
