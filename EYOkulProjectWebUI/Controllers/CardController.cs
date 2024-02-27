@@ -17,12 +17,20 @@ namespace EYOkulProjectWebUI.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.type = _context.TBL_TYPES.ToList();
             var school = new SqlParameter("@SchoolId", HttpContext.Session.GetInt32("SchoolId"));
 
             var query = _context.TBL_CARDS
                                       .FromSqlRaw("EXEC sp_Cards @SchoolId", school)
                                       .ToList();
             return View(query);
+        }
+
+        public IActionResult AddCard(CardModel cardModel)
+        {
+            
+            TempData["Alert"] = "Kart Başarıyla Eklendi.";
+            return RedirectToAction("Index");
         }
     }
 }

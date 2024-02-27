@@ -1,6 +1,5 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
-using EYOkulProjectWebUI.Models.LogModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -107,22 +106,6 @@ namespace EYOkulProjectWebUI.Controllers
                     var existingUser = _context.TBL_A_USERS.Where(x => x.UserUserName == userModel.UserUserName).FirstOrDefault();
                     if (existingUser == null)
                     {
-                        User_H_Model user_H_Model = new User_H_Model()
-                        {
-                            ProccessType = "INSERT",
-                            UserName = userModel.UserName,
-                            UserSurName = userModel.UserSurName,
-                            UserUserName = userModel.UserName,
-                            Password = userModel.HashPassword(userModel.Password),
-                            IsActive = true,
-                            IsDeleted = false,
-                            InsertedDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
-                            SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"),
-                            UserType = userModel.UserType,
-                            SchoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
-                        };
-                        _context.TBL_A_H_USERS.Add(user_H_Model);
                         _context.Add(model);
                         _context.SaveChanges();
                         TempData["Alert"] = "Kullanıcı Başarıyla Eklendi.";

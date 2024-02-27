@@ -1,6 +1,5 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Models;
-using EYOkulProjectWebUI.Models.LogModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,20 +35,6 @@ namespace EYOkulProjectWebUI.Controllers
                 SchoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
                 SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
             };
-            Terminal_H_Model terminal_H_Model = new Terminal_H_Model()
-            {
-                ProccessType = "INSERT",
-                TerminalName = terminalModel.TerminalName,
-                TerminalNum = terminalModel.TerminalNum,
-                TerminalIp = terminalModel.TerminalIp,
-                IsActive = true,
-                IsDeleted = false,
-                InsertedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                SchoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
-                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
-            };
-            _context.TBL_H_TERMINALS.Add(terminal_H_Model);
             _context.TBL_TERMINALS.Add(terminal);
             _context.SaveChanges();
             TempData["Alert"] = "Terminal Ekleme İşlemi Tamamlandı.";
@@ -67,20 +52,6 @@ namespace EYOkulProjectWebUI.Controllers
             terminal.UpdatedDate = DateTime.Now;
             terminal.SchoolId = (int)HttpContext.Session.GetInt32("SchoolId");
             _context.TBL_TERMINALS.Update(terminal);
-            Terminal_H_Model terminal_H_Model = new Terminal_H_Model()
-            {
-                ProccessType = "UPDATE",
-                TerminalName = terminal.TerminalName,
-                TerminalNum = terminal.TerminalNum,
-                TerminalIp = terminal.TerminalIp,
-                IsActive = terminal.IsActive,
-                IsDeleted = terminal.IsDeleted,
-                InsertedDate = terminal.InsertedDate,
-                UpdatedDate = DateTime.Now,
-                SchoolId = (int)HttpContext.Session.GetInt32("SchoolId"),
-                SysUserId = (int)HttpContext.Session.GetInt32("SysUserId")
-            };
-            _context.TBL_H_TERMINALS.Add(terminal_H_Model);
             _context.SaveChanges();
             TempData["Alert"] = "Terminal Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Terminal");

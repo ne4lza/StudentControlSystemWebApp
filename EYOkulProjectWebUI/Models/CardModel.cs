@@ -29,5 +29,9 @@ namespace EYOkulProjectWebUI.Models
         public string StudentSurName { get; set; }
         public string UserTypeName { get; set; }
         public string ClassName { get; set; }
+        [NotMapped]
+        public decimal StudentTckn { get; set; }
+        [NotMapped]
+        public string UserUserName { get; set; }
     }
 }

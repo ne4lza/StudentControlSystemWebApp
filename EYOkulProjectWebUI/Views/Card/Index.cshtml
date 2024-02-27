@@ -104,24 +104,72 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Yeni Terminal Ekle</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Yeni Kart Ekle</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/Terminal/AddTerminal">
-                    <div class="mb-3">
-                        <label for="sinifAdi" class="form-label">Terminal Adı:</label>
-                        <input type="text" class="form-control" id="sinifAdi" name="TerminalName" required>
+                <form method="post" action="/Card/AddCard">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="sinifAdi" class="form-label">Kart Sahibi Adı:</label>
+                                <input type="text" class="form-control" id="sinifAdi" name="TerminalName" required>
+                            </div>
+                            
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">Kart Sahibi Soyadı:</label>
+                                <input type="text" class="form-control" id="aciklama" name="TerminalNum" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="aciklama" class="form-label">Terminal Numarası:</label>
-                        <input type="text" class="form-control" id="aciklama" name="TerminalNum" required>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">Telefon Numarası:</label>
+                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">E-Posta Adresi:</label>
+                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="aciklama" class="form-label">Terminal IP Adresi:</label>
-                        <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">TCKN:</label>
+                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">Kart Numarası:</label>
+                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                            </div>
+                        </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">Öğrenciye Ait TCKN:</label>
+                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="aciklama" class="form-label">Kart Tipi:</label>
+                            <select class="form-control">
+                                <option value="-1">--Seçiniz--</option>
+                                @foreach (var item in ViewBag.type)
+                                {
+                                    <option value="@item.Id">@item.Tip</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Kaydet</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
