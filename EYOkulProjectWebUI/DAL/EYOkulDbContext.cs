@@ -5,6 +5,10 @@ namespace EYOkulProjectWebUI.DAL
 {
     public class EYOkulDbContext : DbContext
     {
+        public EYOkulDbContext(DbContextOptions<EYOkulDbContext> options)
+            : base(options)
+        {
+        }
         public DbSet<CardModel> TBL_CARDS { get; set; }
         public DbSet<StudentsModel> TBL_STUDENTS { get; set; }
         public DbSet<ClassModel> TBL_CLASS { get; set; }
@@ -13,17 +17,7 @@ namespace EYOkulProjectWebUI.DAL
         public DbSet<TerminalModel> TBL_TERMINALS { get; set; }
         public DbSet<UserModel> TBL_A_USERS { get; set; }
         public DbSet<UserTypeModel> TBL_TYPES { get; set; }
-        public DbSet<MessageModel> TBL_MESSAGE { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-
-            //optionsBuilder.UseSqlServer("Server =DESKTOP-OIDPVCJ;Database =YeDaSis;User Id=sa; Password=wsxEDCrfv123; TrustServerCertificate=true;");
-            optionsBuilder.UseSqlServer("Server =176.33.15.4;Database =EYOkulProject;User Id=enes; Password=wsxEDCrfv123; TrustServerCertificate=true;");
-
-
-
-            //    Server =DESKTOP-3PAJ411; Database = NORTHWND; User Id = sa; Password = wsxEDCrfv123;
-        }
+        public DbSet<TBL_MESSAGE> TBL_MESSAGE { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

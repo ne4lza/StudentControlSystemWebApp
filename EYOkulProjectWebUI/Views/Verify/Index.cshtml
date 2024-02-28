@@ -1,98 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Index";
 }
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="row" style="text-align:center">
-                <label id="readerName2" style="color:white; font-size:30px; "></label>
-            </div>
-            <div class="row" style="padding-left:10px !important;">
-                <div class="col-md-12">
-                    <div id="veriGoster"></div>
-                    <label id="matime2" style="color:white; font-size:30px; margin-left:50px"></label>
-                    <div class="row"><label id="matitle2" style="color:white; font-size:30px; margin-left:50px"></label></div>
-                    <div class="row"><label id="maname2" style="color:white; font-size:30px; margin-left:50px"></label></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="row">
-                <label id="readerName2" style="color:white; font-size:30px; "></label>
-            </div>
-            <div class="row" style="padding-left:10px !important;">
-                <div class="col-md-12">
-                    <img id="mainpic2" src="~/Images/001.jpg" style="height:500px; max-height:600px !important; max-width:600px; width:80%; border:3px solid #A4D5F5"
-                         onerror="this.src = 'Images/users.png';" />
-                    <label id="matime2" style="color:white; font-size:30px; margin-left:50px"></label>
-                    <div class="row"><label id="matitle2" style="color:white; font-size:30px; margin-left:50px"></label></div>
-                    <div class="row"><label id="maname2" style="color:white; font-size:30px; margin-left:50px"></label></div>
-                </div>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-body text-center">
+        <img id="studentImage" alt="Student Image" style="width: 300px; height: 300px;">
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            <img id="m12" src="~/Images/007.jpg" style="height:90px; width:auto; border:3px solid #A4D5F5" onerror="this.src = 'Images/users.png';" />
-            <div class="row" style="line-height:12px;">
-                <label id="m1time2" style="color:white; font-size:12px; margin-left:30px; margin-bottom:0px !important"></label>
-            </div>
-            <div class="row" style="line-height:12px;">
-                <label id="m1title2" style="color:white; font-size:12px; margin-left:30px; margin-bottom:0px !important;"></label>
-            </div>
-            <div class="row" style="margin-top:2px !important;"><label id="m1name2" style="color:white; font-size:12px; margin-left:30px"></label></div>
-        </div>
-        <div class="col-md-3">
-            <img id="m22" src="~/Images/007.jpg" style="height:90px; width:auto; border:3px solid #A4D5F5" onerror="this.src = 'Images/users.png';" />
-            <div class="row" style="line-height:12px;">
-                <label id="m2time2" style="color:white; font-size:12px; margin-left:30px"></label>
-            </div>
-            <div class="row" style="line-height:12px;">
-                <label id="m2title2" style="color:white; font-size:12px; margin-left:30px"></label>
-            </div>
-            <div class="row" style="padding-top:2px !important;"><label id="m2name2" style="color:white; font-size:12px; margin-left:30px"></label></div>
-        </div>
-        <div class="col-md-3">
-            <img id="m32" src="~/Images/007.jpg" style="height:90px; width:auto; border:3px solid #A4D5F5" onerror="this.src = 'Images/users.png';" />
-            <div class="row" style="line-height:12px;">
-                <label id="m3time2" style="color:white;  font-size:12px; margin-left:30px"></label>
-            </div>
-            <div class="row" style="line-height:12px;">
-                <label id="m3title2" style="color:white;  font-size:12px; margin-left:30px"></label>
-            </div>
-            <div class="row" style="padding-top:2px !important;line-height:12px;"><label id="m3name2" style="color:white; font-size:12px; margin-left:30px"></label></div>
-        </div>
-        <div class="col-md-3">
-            <img id="m42" src="~/Images/007.jpg" style="height:90px; width:auto; border:3px solid #A4D5F5" onerror="this.src = 'Images/users.png';" />
-            <div class="row" style="line-height:12px;">
-                <label id="m4time2" style="color:white; font-size:12px; margin-left:30px"></label>
-            </div>
-            <div class="row" style="line-height:10px;">
-                <label id="m4title2" style="color:white; font-size:12px; margin-left:30px"></label>
-            </div>
-            <div class="row" style="padding-top:2px !important"><label id="m4name2" style="color:white; font-size:12px; margin-left:30px"></label></div>
+    <div class="card-body">
+        <div id="studentInfo">
+            <p><strong>Student Name:</strong> <span id="studentName"></span></p>
+            <p><strong>Class:</strong> <span id="studentClass"></span></p>
+            <p><strong>Guardian Name:</strong> <span id="guardianName"></span></p>
+            <!-- Diğer bilgileri ekleyebilirsiniz -->
         </div>
     </div>
 </div>
+
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.7/signalr.min.js"></script>
-    <script>
-        // SignalR hub'ına bağlantı oluşturma ve veri dinleme
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/transactionHub") // Hub URL'si
-            .configureLogging(signalR.LogLevel.Information) // İsteğe bağlı: Log seviyesi ayarı
-            .build();
+    <!-- SignalR ve dashboard.js dosyalarını yükleyin -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/dashboard.js"></script>
 
-        // Hub'dan gelen verileri dinleme
-        connection.on("TransactionsReceived", (veri) => {
-            // Yeni veri geldiğinde, view'e ekleme işlemini burada yapabilirsiniz
-            console.log("Yeni veri:", veri);
-            // Örnek: Gelen veriyi ekranda gösterme
-            document.getElementById("veriGoster").innerHTML += `<p>${veri}</p>`;
-        });
-
-        // Bağlantıyı başlatma
-        connection.start().catch(err => console.error(err.toString()));
-    </script>
 }

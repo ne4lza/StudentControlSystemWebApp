@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Subscription\Abstract\**" />
     <Compile Remove="wwwroot\Template\**" />
-    <Content Remove="Subscription\Abstract\**" />
     <Content Remove="wwwroot\Template\**" />
-    <EmbeddedResource Remove="Subscription\Abstract\**" />
     <EmbeddedResource Remove="wwwroot\Template\**" />
-    <None Remove="Subscription\Abstract\**" />
     <None Remove="wwwroot\Template\**" />
   </ItemGroup>
 

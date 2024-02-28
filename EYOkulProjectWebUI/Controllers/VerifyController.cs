@@ -1,6 +1,5 @@
 ﻿using EYOkulProjectWebUI.DAL;
 using EYOkulProjectWebUI.Hubs;
-using EYOkulProjectWebUI.Subscription.Concreate;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EYOkulProjectWebUI.Controllers

@@ -10,11 +10,16 @@ namespace EYOkulProjectWebUI.Controllers
     [Authorize]
     public class TransactionController : Controller
     {
+        private readonly EYOkulDbContext _context;
+
+        public TransactionController(EYOkulDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index(DateTime startDate, DateTime endDate,int selectDate)
         {
-            using (var context = new EYOkulDbContext())
             
-            {
                 switch (selectDate)
                 {
                     case 0:
@@ -32,13 +37,13 @@ namespace EYOkulProjectWebUI.Controllers
                 var endDateParam = new SqlParameter("@ldate", endDate);
                 var userName = new SqlParameter("@schoolId", HttpContext.Session.GetInt32("SchoolId"));
 
-                var tr = context.TBL_TRANSACTIONS
+                var tr = _context.TBL_TRANSACTIONS
                                           .FromSqlRaw("EXEC sp_Transaction @fdate, @ldate,@schoolId",
                                                       startDateParam, endDateParam,userName)
                                           .ToList();
 
                 return View("Index", tr);
-            }
+            
         }
     }
 }

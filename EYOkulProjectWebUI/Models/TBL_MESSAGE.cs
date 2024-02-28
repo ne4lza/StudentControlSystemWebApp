@@ -1,6 +1,6 @@
 ﻿namespace EYOkulProjectWebUI.Models
 {
-    public class MessageModel
+    public class TBL_MESSAGE
     {
         public int Id { get; set; }
         public string StudentNameSurName { get; set; }
