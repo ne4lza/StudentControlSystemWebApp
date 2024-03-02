@@ -1,15 +1,73 @@
 ﻿@{
     ViewData["Title"] = "Index";
 }
-<div class="card">
-    <div class="card-body text-center">
-        <img id="studentImage" alt="Student Image" style="width: 300px; height: 300px;">
+
+<style>
+    /* Kart özelleştirmeleri */
+    .card {
+        width: 400px;
+        margin: 10px auto; /* Kartlar arası boşluk ve kartların merkezlenmesi */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Kart içeriği özelleştirmeleri */
+    .card-body {
+        padding: 20px;
+    }
+
+    /* Resim özelleştirmeleri */
+    .student-image {
+        width: 100%; /* Resimlerin genişliği kartın genişliğine eşit olacak */
+        height: 400px; /* Sabit yükseklik */
+        object-fit: cover; /* Resimlerin kesilmeden tamamen kartın içine sığması */
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Öğrenci bilgisi özelleştirmeleri */
+    .student-info p {
+        margin: 10px 0;
+    }
+
+    /* Kart başlık özelleştirmeleri */
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="pagetitle">
+    <h1>Veli Doğrula</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index">Dashboard</a></li>
+            <li class="breadcrumb-item active">Veli Doğrula</li>
+        </ol>
+    </nav>
+</div>
+<div class="card" style="margin-left:23%;">
+    <h5 class="card-title">En Son İşlem</h5>
+    <!-- Birinci öğrenci kartı -->
+    <img class="student-image" id="studentImage1" src="~/NiceAdmin/assets/img/user.jpg" alt="Student Image">
+    <div class="card-body student-info">
+        <!-- Öğrenci bilgileri -->
+        <div id="studentInfo1">
+            <p><strong>Student Name:</strong> <span id="studentName1"></span></p>
+            <p><strong>Class:</strong> <span id="studentClass1"></span></p>
+            <p><strong>Guardian Name:</strong> <span id="guardianName1"></span></p>
+            <!-- Diğer bilgileri ekleyebilirsiniz -->
+        </div>
     </div>
-    <div class="card-body">
-        <div id="studentInfo">
-            <p><strong>Student Name:</strong> <span id="studentName"></span></p>
-            <p><strong>Class:</strong> <span id="studentClass"></span></p>
-            <p><strong>Guardian Name:</strong> <span id="guardianName"></span></p>
+</div>
+<div class="card" style="margin-right:23%;">
+    <h5 class="card-title">&nbsp;</h5>
+    <!-- İkinci öğrenci kartı -->
+    <img class="student-image" id="studentImage2" src="~/NiceAdmin/assets/img/user.jpg" alt="Student Image">
+    <div class="card-body student-info">
+        <!-- Öğrenci bilgileri -->
+        <div id="studentInfo2">
+            <p><strong>Student Name:</strong> <span id="studentName2"></span></p>
+            <p><strong>Class:</strong> <span id="studentClass2"></span></p>
+            <p><strong>Guardian Name:</strong> <span id="guardianName2"></span></p>
             <!-- Diğer bilgileri ekleyebilirsiniz -->
         </div>
     </div>
@@ -21,5 +79,4 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/dashboard.js"></script>
-
 }

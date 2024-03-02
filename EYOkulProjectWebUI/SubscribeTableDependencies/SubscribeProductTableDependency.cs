@@ -10,18 +10,21 @@ namespace EYOkulProjectWebUI.SubscribeTableDependencies
         SqlTableDependency<TBL_MESSAGE> tableDependency;
         DashboardHub dashboardHub;
         EYOkulDbContext _context;
-        public SubscribeProductTableDependency(DashboardHub dashboardHub)
+        public SubscribeProductTableDependency(DashboardHub dashboardHub, EYOkulDbContext context)
         {
             this.dashboardHub = dashboardHub;
+            _context = context;
         }
 
         public void SubscribeTableDependency(string connectionString)
         {
+
             tableDependency = new SqlTableDependency<TBL_MESSAGE>(connectionString);
             tableDependency.OnChanged += TableDependency_OnChanged;
             tableDependency.OnError += TableDependency_OnError;
             tableDependency.Start();
         }
+
 
         private async void TableDependency_OnChanged(object sender, TableDependency.SqlClient.Base.EventArgs.RecordChangedEventArgs<TBL_MESSAGE> e)
         {
@@ -30,7 +33,6 @@ namespace EYOkulProjectWebUI.SubscribeTableDependencies
                 await dashboardHub.SendProducts();
             }
         }
-
         private void TableDependency_OnError(object sender, TableDependency.SqlClient.Base.EventArgs.ErrorEventArgs e)
         {
             Console.WriteLine($"{nameof(TBL_MESSAGE)} SqlTableDependency error: {e.Error.Message}");

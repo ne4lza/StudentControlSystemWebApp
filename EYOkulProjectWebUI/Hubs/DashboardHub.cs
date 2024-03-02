@@ -6,20 +6,21 @@ namespace EYOkulProjectWebUI.Hubs
 {
     public class DashboardHub : Hub
     {
-        private readonly EYOkulDbContext dbContext;
+        private readonly EYOkulDbContext _dbContext;
 
-        public DashboardHub(EYOkulDbContext _dbContext)
+        public DashboardHub(EYOkulDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
+            
         }
 
         public async Task SendProducts()
         {
-            var query = await dbContext.TBL_MESSAGE.OrderByDescending(x=>x.Id).ToListAsync();
-            foreach (var emp in query)
-            {
-                dbContext.Entry(emp).Reload();
-            }
+            var query = await _dbContext.TBL_MESSAGE.OrderByDescending(x=>x.Id).Take(2).ToListAsync();
+            //foreach (var emp in query)
+            //{
+            //    _dbContext.Entry(emp).Reload();
+            //}
             await Clients.All.SendAsync("ReceivedProducts", query);
         }
     }

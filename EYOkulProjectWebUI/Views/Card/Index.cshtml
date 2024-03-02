@@ -21,9 +21,18 @@
         color: #ccc;
     }
 </style>
+<div class="pagetitle">
+    <h1>Kart Yönetimi</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Dashboard/Index">Dashboard</a></li>
+            <li class="breadcrumb-item active">Kartlar</li>
+        </ol>
+    </nav>
+</div>
 <div class="container-fluid py-4">
     <div class="col">
-        <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#AddCardModal">Yeni Bir Terminal Ekle</button>
+        <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#AddCardModal">Yeni Bir Kart Ekle</button>
     </div>
     <br />
     <div class="row">
@@ -37,7 +46,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Terminaller</h5>
+                    <h5 class="card-title">Kartlar</h5>
                     <!-- Table with stripped rows -->
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
@@ -113,14 +122,14 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="sinifAdi" class="form-label">Kart Sahibi Adı:</label>
-                                <input type="text" class="form-control" id="sinifAdi" name="TerminalName" required>
+                                <input type="text" class="form-control" id="sinifAdi" name="UserName" required>
                             </div>
                             
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label">Kart Sahibi Soyadı:</label>
-                                <input type="text" class="form-control" id="aciklama" name="TerminalNum" required>
+                                <input type="text" class="form-control" id="aciklama" name="UserLastName" required>
                             </div>
                         </div>
                     </div>
@@ -128,13 +137,13 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label">Telefon Numarası:</label>
-                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                                <input type="text" class="form-control" id="aciklama" name="PhoneNumber" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label">E-Posta Adresi:</label>
-                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                                <input type="email" class="form-control" id="aciklama" name="Mail" required>
                             </div>
                         </div>
                     </div>
@@ -142,13 +151,13 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label">TCKN:</label>
-                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                                <input type="text" class="form-control" id="aciklama" name="Tckn" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label">Kart Numarası:</label>
-                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                                <input type="text" class="form-control" id="aciklama" name="CardNum" required>
                             </div>
                         </div>
                     </div>
@@ -156,18 +165,24 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="aciklama" class="form-label">Öğrenciye Ait TCKN:</label>
-                                <input type="text" class="form-control" id="aciklama" name="TerminalIp" required>
+                                <input type="text" class="form-control" id="aciklama" name="StudentTckn" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <label for="aciklama" class="form-label">Kart Tipi:</label>
-                            <select class="form-control">
+                            <select class="form-control" name="UserType">
                                 <option value="-1">--Seçiniz--</option>
                                 @foreach (var item in ViewBag.type)
                                 {
                                     <option value="@item.Id">@item.Tip</option>
                                 }
                             </select>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="aciklama" class="form-label">Sistem kullanıcı adı:</label>
+                                <input type="text" class="form-control" id="aciklama" name="UserUserName" required>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

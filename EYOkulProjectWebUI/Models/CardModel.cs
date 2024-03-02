@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EYOkulProjectWebUI.Models
 {
     public class CardModel
     {
+        [Key]
         public int Id { get; set; }
         public string UserName { get; set; }
         public string UserLastName { get; set; }

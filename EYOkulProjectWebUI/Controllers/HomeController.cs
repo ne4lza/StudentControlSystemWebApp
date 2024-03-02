@@ -50,7 +50,7 @@ namespace EYOkulProjectWebUI.Controllers
                 HttpContext.Session.SetInt32("SysUserId", model.Id);
                 
                 string name = model.UserName + " " + model.UserSurName;
-                ViewBag.fullName = name;
+                HttpContext.Session.SetString("FullName",name);
                 ViewBag.userName = model.UserName;
                 var school = _context.TBL_SCOOLS.Where(x=>x.Id == model.SchoolId).FirstOrDefault();
                 ViewBag.schoolName = school.ScoolName;

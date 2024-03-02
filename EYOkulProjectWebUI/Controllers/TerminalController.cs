@@ -2,6 +2,7 @@
 using EYOkulProjectWebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EYOkulProjectWebUI.Controllers
 {
@@ -40,12 +41,6 @@ namespace EYOkulProjectWebUI.Controllers
             TempData["Alert"] = "Terminal Ekleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Terminal");
         }
-        [HttpGet]
-        public IActionResult UpdateTerminal(int id)
-        {
-            var terminal = _context.TBL_TERMINALS.Where(x => x.Id == id).FirstOrDefault();
-            return PartialView("_UpdateTerminalModal", terminal);
-        }
         [HttpPost]
         public IActionResult UpdateTerminal(TerminalModel terminal)
         {
@@ -53,6 +48,7 @@ namespace EYOkulProjectWebUI.Controllers
             terminal.SchoolId = (int)HttpContext.Session.GetInt32("SchoolId");
             _context.TBL_TERMINALS.Update(terminal);
             _context.SaveChanges();
+            _context.Entry(terminal).State = EntityState.Detached;
             TempData["Alert"] = "Terminal Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Terminal");
         }

@@ -12,7 +12,12 @@ builder.Services.AddSignalR();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("SQL");
-builder.Services.AddDbContext<EYOkulDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
+builder.Services.AddDbContext<EYOkulDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+},
+    ServiceLifetime.Singleton);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();

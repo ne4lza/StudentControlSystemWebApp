@@ -76,7 +76,7 @@ namespace EYOkulProjectWebUI.Controllers
             return View(model.ToList());
         }
 
-            [HttpPost]
+        [HttpPost]
         public IActionResult AddSysUser(UserModel userModel)
         {
             UserModel model = new UserModel()

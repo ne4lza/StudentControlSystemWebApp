@@ -127,15 +127,14 @@ namespace EYOkulProjectWebUI.Controllers
                 return RedirectToAction("Index", "Student");
             }
         }
-
         [HttpPost]
         public IActionResult UpdateStudent(StudentsModel updatedStudent)
         {
-            updatedStudent.UpdatedDate = DateTime.Now;
-           
+            updatedStudent.UpdatedDate = DateTime.Now;     
             updatedStudent.SysUserId = (int) HttpContext.Session.GetInt32("SysUserId");
             _context.TBL_STUDENTS.Update(updatedStudent);
             _context.SaveChanges();
+            _context.Entry(updatedStudent).State = EntityState.Detached;
             TempData["Alert"] = "Öğrenci Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Student");
         }

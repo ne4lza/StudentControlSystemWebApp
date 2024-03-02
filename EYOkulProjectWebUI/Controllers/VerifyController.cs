@@ -6,13 +6,6 @@ namespace EYOkulProjectWebUI.Controllers
 {
     public class VerifyController : Controller
     {
-        private readonly EYOkulDbContext _context;
-
-        public VerifyController(EYOkulDbContext context)
-        {
-            _context = context;
-        }
-
         public IActionResult Index()
         {
             return View();

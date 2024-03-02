@@ -2,7 +2,7 @@
 using EYOkulProjectWebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace EYOkulProjectWebUI.Controllers
 {
@@ -43,23 +43,22 @@ namespace EYOkulProjectWebUI.Controllers
             TempData["Alert"] = "Sınıf Ekleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Sinif");
         }
-        [HttpGet]
-        public IActionResult UpdateSinif(int id)
-        {
-
-            var model = _context.TBL_CLASS.Where(x => x.Id == id).FirstOrDefault();
-            return PartialView("_UpdateSinifModal", model);
-        }
         [HttpPost]
         public IActionResult UpdateSinif(ClassModel cl)
         {
+            // Güncelleme tarihini ve kullanıcı kimliğini ayarla
             cl.UpdateDate = DateTime.Now;
-            cl.SysUserId = (int)HttpContext.Session.GetInt32("SysUserId");
+            cl.SysUserId = (int)HttpContext.Session.GetInt32("SysUserId"); 
+
+            // Varlık örneğini doğrudan güncelle
             _context.TBL_CLASS.Update(cl);
             _context.SaveChanges();
+            _context.Entry(cl).State = EntityState.Detached;
+
             TempData["Alert"] = "Sınıf Güncelleme İşlemi Tamamlandı.";
             return RedirectToAction("Index", "Sinif");
         }
+
 
     }
 }

@@ -5,6 +5,10 @@ namespace EYOkulProjectWebUI.DAL
 {
     public class EYOkulDbContext : DbContext
     {
+        public EYOkulDbContext()
+        {
+        }
+
         public EYOkulDbContext(DbContextOptions<EYOkulDbContext> options)
             : base(options)
         {
